@@ -1,0 +1,25 @@
+# Node.js
+# Build a general Node.js project with npm.
+# Add steps that analyze code, save build artifacts, deploy, and more:
+# https://docs.microsoft.com/azure/devops/pipelines/languages/javascript
+
+trigger: none  # Manual trigger only for debugging
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+steps:
+- checkout: self
+  
+- script: |
+    echo "=== DEBUG INFORMATION ==="
+    echo "Agent OS: $(Agent.OS)"
+    echo "Build Sources Directory: $(Build.SourcesDirectory)"
+    echo "System Default Working Directory: $(System.DefaultWorkingDirectory)"
+    echo ""
+    echo "Folder structure:"
+    find . -type f -name "package.json" -o -name "*.json" | head -20
+    echo ""
+    echo "If package.json found, show content:"
+    find . -name "package.json" -exec echo "Found at: {}" \; -exec cat {} \;
+  displayName: 'Debug Structure'
