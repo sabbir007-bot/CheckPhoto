@@ -1,0 +1,45 @@
+# Node.js
+# Build a general Node.js project with npm.
+# Add steps that analyze code, save build artifacts, deploy, and more:
+# https://docs.microsoft.com/azure/devops/pipelines/languages/javascript
+
+trigger:
+  branches:
+    include:
+    - main
+  paths:
+    include:
+    - backend/**  # Only trigger when backend files change
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+variables:
+  BACKEND_PATH: 'backend'
+
+steps:
+# Step 1: Verify checkout
+- checkout: self
+  path: 's'  # Explicit checkout path
+
+# Step 2: Set Node.js version
+- task: NodeTool@0
+  inputs:
+    versionSpec: '18.x'
+
+# Step 3: Navigate and build
+- powershell: |
+    Write-Host "Current location: $(Get-Location)"
+    Write-Host "Backend path exists: $(Test-Path '$env:BUILD_SOURCESDIRECTORY/backend')"
+    
+    # Change to backend directory
+    Set-Location -Path '$env:BUILD_SOURCESDIRECTORY/backend'
+    
+    Write-Host "Now in: $(Get-Location)"
+    Write-Host "Package.json exists: $(Test-Path 'package.json')"
+    
+    # Install and build
+    npm install
+    npm run build
+  displayName: 'Build Backend'
+  condition: succeeded()
