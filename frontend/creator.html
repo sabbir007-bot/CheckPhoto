@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Frameo - Creator File Upload</title>
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+<body>
+  <nav class="navbar">
+    <h1>Creator File Upload</h1>
+
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="creator.html">Upload</a></li>
+      <li><a href="creator/creator-dashboard.html">Dashboard</a></li>
+    </ul>
+  </nav>
+  
+  <form id="uploadForm">
+    <input type="text" name="title" placeholder="Title" required><br><br>
+    <textarea name="caption" placeholder="Caption" required></textarea><br><br>
+    <input type="text" name="location" placeholder="Location"><br><br>
+    <input type="text" name="people" placeholder="People (comma-separated)"><br><br>
+    
+    <div class="file-upload-row">
+      <input type="file" name="mediaFile" accept="image/*,video/*" required>
+      <button type="submit">Upload Media</button>
+    </div>
+    
+  </form>
+
+  <p id="statusMessage"></p>
+
+  <script src="js/creator.js"></script>
+</body>
+</html>
